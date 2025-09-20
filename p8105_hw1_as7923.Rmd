@@ -1,0 +1,7 @@
+---
+title: "P8105 HOMEWORK 1"
+author: "Anu Singh"
+date: "2025-09-20"
+output: github_document
+---
+
