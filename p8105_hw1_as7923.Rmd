@@ -6,10 +6,30 @@ output: github_document
 ---
 
 ## PROBLEM 1
+
+Loading the required library, and displaying portion of dataset below.
 ```{r}
 library("moderndive")
 data("early_january_weather")
+head(early_january_weather)
 ```
+
+The early_january_weather dataset contains hourly meteorological data from Newark Liberty International Airport (EWR) for January 2013. While the R help documentation mentions that the dataset includes data from three NYC airports (EWR, LGA, and JFK), a quick look at the origin column using unique() reveals only EWR data is present.
+
+The dataset includes `r nrow(early_january_weather)` rows and `r ncol(early_january_weather)` columns, with the key variables/measurements including:
+
+* temp - temperature in degrees Fahrenheit
+* dewp - dewpoint in degrees Fahrenheit
+* humid - relative humidity (percentage)
+* wind_dir - wind direction in degrees
+* wind_speed - wind speed in miles per hour
+* wind_gust - wind gust speed in miles per hour
+* precip - precipitation in inches
+* pressure - sea level pressure in millibars
+* visib - visibility in miles
+* time_hour - date and hour of recording (POSIXct format)
+
+The mean temperature during January 2013 was `r round(mean(early_january_weather$temp), 2)` degrees Fahrenheit.
 
 
 ## PROBLEM 2
