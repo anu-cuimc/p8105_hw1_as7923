@@ -7,7 +7,7 @@ output: github_document
 
 ## PROBLEM 1
 
-Loading the required library, and displaying portion of dataset below.
+I loaded the required library, and a portion of the dataset is displayed below.
 ```{r}
 library("moderndive")
 data("early_january_weather")
@@ -45,7 +45,7 @@ scatterplot_temperature = ggplot(early_january_weather,
 scatterplot_temperature
 ```
 
-From observing the scatterplot, an upward trend is apparent, as days progressed from early January to mid-January, the temperature generally increased.An oscillating pattern is also visible from the plot, where temperatures typically rise during daytime, and fall during night. There is no distinct trend with humidity, but it appears that humidity decreases at higher temperatures (noticeable at peaks in the graph).
+From observing the scatterplot, an upward trend is apparent, as days progressed from early January to mid-January, the temperature generally increased.An oscillating pattern is also visible from the plot, where temperatures typically rise during daytime, and fall during night. There is no distinct trend with humidity, but it appears that humidity decreases at higher temperatures (noticeable at the small peaks in the graph).
 
 The plot created has been saved in the project directory as a PNG file.
 ```{r graph_PNG, message = FALSE}
@@ -54,7 +54,50 @@ ggsave("scatterplot_temperature.png", plot = scatterplot_temperature)
 
 ## PROBLEM 2
 
+Using data.frame() a dataframe has been generated below, as per the given requirements.
 ```{r}
+# setting seed to produce same random values each run
+set.seed(7923)
 
+problem2_df = data.frame(
+  # random sample of 10 from standard Normal dist.
+  numeric_var = rnorm(10), 
+  
+  # logical vector (TRUE if > 0)                             
+  logical_var = rnorm(10) > 0, 
+  
+  # character vector of length 10
+  character_var = c("a", "b", "c", "d", "e", "f", "g", "h", "i", "j"),  
+  
+  # factor vector of length 10,  with 3 levels
+  factor_var = factor(rep(c("low", "medium", "high"), length.out = 10))  
+)
+
+problem2_df
 ```
+After generating the above dataframe, the mean for each variable will be derived below.
+
+```{r}
+mean(problem2_df %>% pull(numeric_var))
+mean(problem2_df %>% pull(logical_var))
+mean(problem2_df %>% pull(character_var))
+mean(problem2_df %>% pull(factor_var))
+```
+After running the above lines of code, only means for the numeric and logical variables were calculated. The mean calculations for the character and factor variables resulted in an error.
+
+I will now apply as.numeric() to logical, character, and factor variables, and see what happens.
+```{r as_numeric, eval = FALSE}
+as.numeric(problem2_df %>% pull(logical_var))
+as.numeric(problem2_df %>% pull(character_var))
+as.numeric(problem2_df %>% pull(factor_var))
+```
+
+The following is observed:
+
+* Logical variable - TRUE values are converted to 1 and FALSE are converted to 0
+* Character variable - NAs and a warning is produced, this is because letters cannot be converted to numbers
+* Factor variable - Converts the factors to their underlying numeric values (2 = low, 3 = medium, 1 = high). The assigned values represent the factor levels
+
+The conversion of the above value explains the results for means we saw earlier. The mean of the logical variable generates the proportion of TRUE values (hence we saw 0.6). Whereas, the means of character and factor variables result in an error because there is no way to convert letters into meaningful numeric values, and averaging categorical variables such as low, medium, high is meaningless and does not make sense. 
+
 
