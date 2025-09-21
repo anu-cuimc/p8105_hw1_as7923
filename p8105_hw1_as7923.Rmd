@@ -14,7 +14,7 @@ data("early_january_weather")
 head(early_january_weather)
 ```
 
-The early_january_weather dataset contains hourly meteorological data from Newark Liberty International Airport (EWR) for January 2013. While the R help documentation mentions that the dataset includes data from three NYC airports (EWR, LGA, and JFK), a quick look at the origin column using unique() reveals only EWR data is present.
+The early_january_weather dataset contains hourly meteorological data from Newark Liberty International Airport (EWR) for January 1st to 15th in 2013. While the R help documentation mentions that the dataset includes data from three NYC airports (EWR, LGA, and JFK), a quick look at the origin column using unique() reveals only EWR data is present.
 
 The dataset includes `r nrow(early_january_weather)` rows and `r ncol(early_january_weather)` columns, with the key variables/measurements including:
 
@@ -31,5 +31,30 @@ The dataset includes `r nrow(early_january_weather)` rows and `r ncol(early_janu
 
 The mean temperature during January 2013 was `r round(mean(early_january_weather$temp), 2)` degrees Fahrenheit.
 
+Using ggplot() from the tidyverse library, a scatterplot of time vs. temperature was created.
+
+```{r scatterplot, message = FALSE}
+library(tidyverse)
+scatterplot_temperature = ggplot(early_january_weather, 
+       aes(x = time_hour, y = temp, color = humid )) + 
+	geom_point() +
+  labs(title = "Temperature vs. Time (with Humidity)",
+       x = "Date and Hour",
+       y = "Temperature (°F)",
+       color = "Relative Humidity (%)" )
+scatterplot_temperature
+```
+
+From observing the scatterplot, an upward trend is apparent, as days progressed from early January to mid-January, the temperature generally increased.An oscillating pattern is also visible from the plot, where temperatures typically rise during daytime, and fall during night. There is no distinct trend with humidity, but it appears that humidity decreases at higher temperatures (noticeable at peaks in the graph).
+
+The plot created has been saved in the project directory as a PNG file.
+```{r graph_PNG, message = FALSE}
+ggsave("scatterplot_temperature.png", plot = scatterplot_temperature)
+```
 
 ## PROBLEM 2
+
+```{r}
+
+```
+
